@@ -1,0 +1,250 @@
+%
+% Copyright (C) 2017 Bruno Félix Rezende Ribeiro <oitofelix@ufu.br>
+%
+% Copying and distribution of this file, with or without modification,
+% are permitted in any medium without royalty provided the copyright
+% notice and this notice are preserved.  This file is offered as-is,
+% without any warranty.
+%
+
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+% \usepackage[brazil]{babel}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{cancel}
+\usepackage{authblk}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+\newenvironment{proofNl}[1][\proofname]{\proof[#1]\mbox{}\\*}{\endproof}
+
+\providecommand{\keywords}[1]{\textbf{\textit{Index terms---}} #1}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\ip}[2]{\left\langle #1, #2\right\rangle}
+\newcommand{\function}[3]{#1:#2\rightarrow#3}
+\newcommand{\comment}[2]{\stackrel{\mathclap{\textnormal{\tiny\mbox{#2}}}}{#1}}
+% \newcommand{\boxedLeftArrow}{\raisebox{2pt}[\height][0pt]{
+%     \framebox{\raisebox{-1pt}[\height][0pt]{\(\Leftarrow\)}}}\enspace}
+% \newcommand{\boxedRightArrow}{\raisebox{2pt}[\height][0pt]{
+%     \framebox{\raisebox{-1pt}[\height][0pt]{\(\Rightarrow\)}}}\enspace}
+
+
+\title{Proof of Jordan-von Neumann theorem for vector spaces over \(\R\)}
+\author{Bruno Félix Rezende Ribeiro \\ \href{mailto:oitofelix@ufu.br}{oitofelix@ufu.br}}
+\affil{FAMAT --- Universidade Federal de Uberlândia}
+\date{2017-04-15}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+  The present work provides a proof of Jordan-von Neumann theorem for
+  real vector spaces.  The proof presented here is a somewhat more
+  detailed, particular case of the complex treatment given by
+  P. Jordan and J. v. Neumann in \cite{JN}.
+\end{abstract}
+
+\keywords{Jordan-von Neumann Theorem, Vector spaces over \(\R\),
+  Parallelogram law}
+
+\begin{definition}[Inner Product]\label{def_ip}
+  Let \(E\) be a vector space over \(\R\).  A function
+  \(\function{\ip{.}{.}}{E \times E}{\R}\) is an \textbf{inner
+    product} iff
+  \begin{description}
+  \item[P1]
+    \(x \neq 0 \Rightarrow \ip{x}{x} > 0, \forall x \in E\)
+  \item[P2]
+    \(\ip{x}{y} = \ip{y}{x}, \forall x, y \in E\)
+  \item[P3]
+    \(\ip{x+y}{z} = \ip{x}{z} + \ip{y}{z}, \forall x, y, z \in E\)
+  \item[P4]
+    \(\ip{\lambda x}{y} = \lambda\ip{x}{y}, \forall\lambda\in\R,
+    \forall x, y \in E\)
+  \end{description}
+\end{definition}
+
+\begin{definition}
+  A normed vector space \((E,\norm{.})\) satisfies the
+  \textbf{parallelogram law} iff
+  \[\norm{x+y}^2+\norm{x-y}^2=2(\norm{x}^2+\norm{y}^2), \forall x, y
+    \in E\]
+\end{definition}
+
+\begin{theorem}
+  Let \((E,\ip{.}{.})\) be an inner product vector space and define
+  \mbox{\(\norm{x} = \sqrt{\ip{x}{x}}\)}.  Then, the normed vector
+  space \((E,\norm{.})\) satisfies the parallelogram law.
+\end{theorem}
+
+\begin{proof}
+  Given \(x, y \in E\), by definition \ref{def_ip},
+  \begin{align*}
+    & \norm{x+y}^2 + \norm{x-y}^2 \\
+    & \comment{=}{\(\norm{.}\)} \ip{x+y}{x+y} + \ip{x-y}{x-y} \\
+    & \comment{=}{P3} \ip{x}{x+y} + \ip{y}{x+y} + \ip{x}{x-y}
+      + \ip{-y}{x-y} \\
+    & \comment{=}{P2} \ip{x+y}{x} + \ip{x+y}{y} + \ip{x-y}{x}
+      + \ip{x-y}{-y} \\
+    & \comment{=}{P3} \ip{x}{x} + \ip{y}{x} + \ip{x}{y} + \ip{y}{y}
+      + \ip{x}{x} + \ip{-y}{x} + \ip{x}{-y} + \ip{-y}{-y} \\
+    & \comment{=}{P4} 2\ip{x}{x} + \cancel{\ip{y}{x}} + \ip{x}{y} + \ip{y}{y}
+      - \cancel{\ip{y}{x}} + \ip{x}{-y} - \ip{y}{-y} \\
+    & \comment{=}{P2} 2\ip{x}{x} + \ip{x}{y} + \ip{y}{y} + \ip{-y}{x} -
+      \ip{-y}{y} \\
+    & \comment{=}{P4} 2\ip{x}{x} + \ip{x}{y} + \ip{y}{y} - \ip{y}{x} +
+      \ip{y}{y} \\
+    & \comment{=}{P2} 2\ip{x}{x} + \cancel{\ip{x}{y}} + 2\ip{y}{y} -
+      \cancel{\ip{x}{y}} \\
+    & = 2(\ip{x}{x} + \ip{y}{y}) \\
+    & \comment{=}{\(\norm{.}\)} 2(\norm{x}^2 + \norm{y}^2)
+  \end{align*}
+\end{proof}
+
+\begin{theorem}
+  Let \((E,\ip{.}{.})\) be an inner product vector space and define
+  \mbox{\(\norm{x} = \sqrt{\ip{x}{x}}\)}.  Then,
+  \[4\ip{x}{y} = \norm{x+y}^2 - \norm{x-y}^2\]
+\end{theorem}
+
+\begin{proof}
+  Given \(x, y \in E\), by definition \ref{def_ip},
+  \begin{align*}
+    & \norm{x+y}^2 - \norm{x-y}^2 \\
+    & \comment{=}{\(\norm{.}\)} \ip{x+y}{x+y} - \ip{x-y}{x-y} \\
+    & \comment{=}{P3} \ip{x}{x+y} + \ip{y}{x+y} - \ip{x}{x-y}
+      - \ip{-y}{x-y} \\
+    & \comment{=}{P2} \ip{x+y}{x} + \ip{x+y}{y} - \ip{x-y}{x}
+      - \ip{x-y}{-y} \\
+    & \comment{=}{P3} \cancel{\ip{x}{x}} + \ip{y}{x} + \ip{x}{y} + \ip{y}{y}
+      - \cancel{\ip{x}{x}} - \ip{-y}{x} - \ip{x}{-y} - \ip{-y}{-y} \\
+    & \comment{=}{P4} \ip{y}{x} + \ip{x}{y} + \ip{y}{y}
+      + \ip{y}{x} - \ip{x}{-y} + \ip{y}{-y} \\
+    & \comment{=}{P2} 3\ip{x}{y} + \ip{y}{y} - \ip{-y}{x} + \ip{-y}{y} \\
+    & \comment{=}{P4} 3\ip{x}{y} + \cancel{\ip{y}{y}} + \ip{y}{x} -
+      \cancel{\ip{y}{y}} \\
+    & \comment{=}{P2} 4\ip{x}{y}
+  \end{align*}
+\end{proof}
+
+\begin{theorem}
+  Let \((E,\norm{.})\) be a normed vector space which satisfies the
+  parallelogram law, and define
+  \[\ip{x}{y} = \frac{\norm{x+y}^2 - \norm{x-y}^2}{4}\]
+  Then, \(\ip{.}{.}\) is an inner product.
+\end{theorem}
+
+\begin{proof}
+  To prove this we verify each property of definition \ref{def_ip}.\\
+  \\
+  \fbox{P1} Given \(x \in E\) such that \(x \neq 0\),
+  \begin{align*}
+    \ip{x}{x}
+    = \frac{\norm{x + x}^2 - \norm{x - x}^2}{4}
+    = \frac{\norm{2x}^2 - \norm{0}^2}{4}
+    = \frac{\cancel{4}\norm{x}^2}{\cancel{4}}
+    = \norm{x}^2 > 0
+  \end{align*}
+  \\
+  \fbox{P2} Given \(x, y, \in E\),
+  \begin{align*}
+    \ip{x}{y}
+    &= \frac{\norm{x + y}^2 - \norm{x - y}^2}{4}
+    = \frac{\norm{x + y}^2 - (|-1|\norm{x - y})^2}{4}\\
+    &= \frac{\norm{x + y}^2 - \norm{(-1)(x - y)}^2}{4}
+    = \frac{\norm{y + x}^2 - \norm{y - x}^2}{4}
+    = \ip{y}{x}
+  \end{align*}
+  \\
+  \fbox{P3} Given \(x, y, z \in E\), by the parallelogram law,
+  \begin{align}
+    & \norm{(x+z)+y}^2+\norm{(x+z)-y}^2=2(\norm{x+z}^2+\norm{y}^2)\label{eq1} \\
+    & \norm{(x-z)+y}^2+\norm{(x-z)-y}^2=2(\norm{x-z}^2+\norm{y}^2)\label{eq2}
+  \end{align}
+  Subtracting equation \ref{eq2} from equation \ref{eq1},
+  \begin{align}
+    &\norm{(x+z)+y}^2 - \norm{(x-z)+y}^2 +\norm{(x+z)-y}^2 -
+      \norm{(x-z)-y}^2 \nonumber\\
+    &\qquad = 2(\norm{x+z}^2+\norm{y}^2) - 2(\norm{x-z}^2+\norm{y}^2) \nonumber\\
+    \nonumber \\
+    &\Rightarrow(\norm{(x+y)+z}^2 - \norm{(x+y)-z}^2) + (\norm{(x-y)+z}^2 -
+    \norm{(x-y)-z}^2) \nonumber\\
+    &\qquad = 2(\norm{x+z}^2 + \cancel{\norm{y}^2} - \norm{x-z}^2 -
+    \cancel{\norm{y}^2}) \nonumber\\
+    \nonumber\\
+    &\Rightarrow 4\ip{x+y}{z} + 4\ip{x-y}{z} = 8\ip{x}{z} \nonumber\\
+    \nonumber\\
+    &\Rightarrow\ip{x+y}{z} + \ip{x-y}{z} = 2\ip{x}{z}\label{eq3}
+  \end{align}
+  Therefore, given \(x', y', z' \in E\) (by equation \ref{eq3}),
+  \begin{align*}
+    &\ip{\comment{\left(\frac{x'+y'}{2}\right)}{\normalsize\fbox{\(x\)}}
+    +\comment{\left(\frac{x'-y'}{2}\right)}{\normalsize\fbox{\(y\)}}}{z'}
+    +
+    \ip{\comment{\left(\frac{x'+y'}{2}\right)}{\normalsize\fbox{\(x\)}}
+    -\comment{\left(\frac{x'-y'}{2}\right)}{\normalsize\fbox{\(y\)}}}{z'}
+    =
+    2\ip{\comment{\left(\frac{x'+y'}{2}\right)}{\normalsize\fbox{\(x\)}}}{z'}
+    \\\\
+    &\comment{\Rightarrow}{P4}\ip{\frac{x'+\cancel{y'}+x'-\cancel{y'}}{2}}{z'} +
+    \ip{\frac{\cancel{x'}+y'-\cancel{x'}+y'}{2}}{z'} = \ip{x'+y'}{z'}
+    \\\\
+    &\Rightarrow\ip{\frac{\cancel{2}x'}{\cancel{2}}}{z'} +
+    \ip{\frac{\cancel{2}y'}{\cancel{2}}}{z'} = \ip{x'+y'}{z'}
+    \\\\
+    &\Rightarrow\ip{x'}{z'} + \ip{y'}{z'} = \ip{x'+y'}{z'}
+  \end{align*}
+  \\
+  \fbox{P4} Given \(x, y, \in E\), define \(S = \{\lambda \in \R
+  \enspace | \enspace \lambda\ip{x}{y} = \ip{\lambda x}{y}\}\).  Let
+  us proceed to prove that \(S = \R\).
+  \begin{description}
+
+  \item[(\(\Z \subset S\))] Clearly \(1\ip{x}{y}=\ip{1x}{y}=\ip{x}{y}\) and thus
+    \(1 \in S\).  Suppose that \(\alpha, \beta \in S\), then
+    \begin{align*}
+      (\alpha\pm\beta)\ip{x}{y} &= \alpha\ip{x}{y}\pm\beta\ip{x}{y}
+        \comment{=}{H.} \ip{\alpha x}{y}\pm\ip{\beta x}{y} \\
+      & \comment{=}{P3} \ip{\alpha x \pm \beta x}{y}
+        = \ip{(\alpha\pm\beta)x}{y}
+    \end{align*}
+    Which means that \(\alpha\pm\beta\in S\), and therefore \(\Z \subset S\).
+
+  \item[(\(\Q \subset S\))] Suppose that \(\alpha, \beta \in S\) and
+    \(\beta \neq 0\). Hence,
+    \begin{align*}
+      \alpha\ip{x}{y} &\comment{=}{H.} \ip{\alpha x}{y} =
+      \ip{\frac{\beta}{\beta}\alpha x}{y}
+      \comment{=}{H.} \beta\ip{\frac{\alpha}{\beta}x}{y} \\
+      &\Rightarrow \frac{\alpha}{\beta}\ip{x}{y} = \ip{\frac{\alpha}{\beta}x}{y}
+    \end{align*}
+    Which means that \(\frac{\alpha}{\beta} \in S\), and therefore \(\Q
+    \subset S\).
+
+  \item[(\(\R \subset S\))] Given \(x, y \in E\), let \(f\) and \(g\)
+    be real functions such that \(f(\lambda)=\lambda\ip{x}{y}\) and
+    \(g(\lambda)=\ip{\lambda x}{y}\), for all \(\lambda \in \R\).
+    Considering the previous result, it is clear that
+    \(f(\lambda)=g(\lambda), \forall \lambda\in\Q\).  Furthermore,
+    both functions are continuous because \(f\) is linear and \(g\) is
+    composition of continuous functions.  This means that \(f=g\),
+    since two real continuous functions whose values coincide for
+    every rational number must coincide for each irrational number as
+    well.  Therefore \(\R \subset S\).
+  \end{description}
+\end{proof}
+
+\begin{thebibliography}{9}
+\bibitem{JN} P. Jordan and J. v. Neumann; \emph{On inner products in
+    linear, metric spaces}; Annals of Mathematics, Vol. 36, No. 3;
+  July, 1935.
+\end{thebibliography}
+
+\end{document}

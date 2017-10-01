@@ -1,0 +1,297 @@
+%
+% Copyright (C) 2017 Bruno Félix Rezende Ribeiro <oitofelix@ufu.br>
+%
+% Copying and distribution of this file, with or without modification,
+% are permitted in any medium without royalty provided the copyright
+% notice and this notice are preserved.  This file is offered as-is,
+% without any warranty.
+%
+
+\documentclass{article}
+
+% \usepackage[a4paper]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{cancel}
+\usepackage{authblk}
+\usepackage{hyperref}
+\usepackage{enumerate}
+% \usepackage{parskip}
+
+\newtheorem{theorem}{Teorema}
+\newtheorem*{theorem*}{Teorema}
+\newtheorem{definition}[theorem]{Definição}
+\newtheorem{question}[theorem]{Questão}
+\newtheorem{proposition}[theorem]{Proposição}
+\newenvironment{proofNl}[1][\proofname]{\proof[#1]\mbox{}\\*}{\endproof}
+
+\providecommand{\keywords}[1]{\textbf{\textit{Index terms---}} #1}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\ip}[2]{\left\langle #1, #2\right\rangle}
+\newcommand{\function}[3]{#1:#2\rightarrow#3}
+\newcommand{\comment}[2]{\stackrel{\mathclap{\textnormal{\tiny\mbox{#2}}}}{#1}}
+\newcommand{\boxedLeftArrow}{\raisebox{2pt}[\height][0pt]{
+    \framebox{\raisebox{-1pt}[\height][0pt]{\(\Leftarrow\)}}}\enspace}
+\newcommand{\boxedRightArrow}{\raisebox{2pt}[\height][0pt]{
+    \framebox{\raisebox{-1pt}[\height][0pt]{\(\Rightarrow\)}}}\enspace}
+
+\newcommand{\powerset}{\raisebox{.15\baselineskip}{\Large\ensuremath{\wp}}}
+\newcommand{\suchthat}{\enspace|\enspace}
+\newcommand{\myAnd}{\enspace\text{e}\enspace}
+\newcommand{\myOr}{\enspace\text{ou}\enspace}
+\newcommand{\fip}[1]{\text{PIF\,}(#1)}
+
+\title{Prova do teorema de Tychonoff com ênfase em teoria dos conjuntos}
+\author{Bruno Félix Rezende Ribeiro \\ \href{mailto:oitofelix@ufu.br}{oitofelix@ufu.br}}
+\affil{FAMAT ---  Universidade Federal de Uberlândia}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+  Neste trabalho demonstra-se o Teorema de Tychonoff na sua forma mais
+  geral para espaços topológicos quaisquer com ênfase em teoria dos
+  conjuntos.  Presume-se o lema de Zorn.
+\end{abstract}
+
+\keywords{Tychonoff Theorem, Set Theory, Topology}
+
+\begin{definition}[Propriedade da Interseção Finita --- PIF]
+  Seja \(X\) um conjunto e \(\mathcal{S} \subset \powerset(X)\).  A
+  coleção \(\mathcal{S}\) tem a propriedade da interseção finita se
+  \(\varnothing \notin \{\cap \mathcal{R}\}_{\mathcal{R} \subset
+    \mathcal{S}}^{0 < |\mathcal{R}| < \infty}\).
+
+  \vspace{0.5em}\noindent\textbf{Nota:} a satisfação da PIF por \(S\)
+  se denota por ``\(\fip{\mathcal{S}}\)''.
+\end{definition}
+
+\begin{definition}[Ultrafiltro]
+  Seja \(X\) um conjunto e \(\mathcal{F} \subset \powerset(X)\).  A
+  coleção \(\mathcal{F}\) é um ultrafiltro de \(X\) se
+  \(\{\mathcal{G}\}_{\mathcal{F}\subset
+    \mathcal{G}\subset\powerset(X)}^{\fip{\mathcal{G}}}=\{\mathcal{F}\}\).
+
+  \vspace{0.5em}\noindent\textbf{Nota:} um ultrafiltro é portanto uma
+  coleção PIF maximal segundo a inclusão de conjuntos.
+\end{definition}
+
+\begin{proposition}\label{uf_prop}
+  Seja \(\mathcal{F}\) um ultrafiltro de \(X\).  Então vale:
+  \begin{enumerate}[(i)]
+  \item \(\varnothing \notin \mathcal{F}\);
+  \item \(\{\cap A\}_{A \subset \mathcal{F}}^{0 < |A|<\infty} \subset \mathcal{F}\);
+  \item \(\{B \suchthat A \subset B\}_{B\subset X}^{A\in \mathcal{F}}
+    \subset \mathcal{F}\);
+  \item \(\{B \suchthat \varnothing \notin \{A \cap B\}_{A \in \mathcal{F}}
+    \}_{B \subset X} \subset \mathcal{F}\);
+  \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+  \begin{enumerate}[(i)]
+  \item Suponha por absurdo que \(\varnothing \in \mathcal{F}\).  Tome
+    \(A \subset \mathcal{F}\) tal que \(0 < |A| < \infty\),
+    satisfazendo \(\varnothing \in A\).  Claramente, \(\cap A =
+    \varnothing\) e portanto não é o caso que \(\fip{\mathcal{F}}\), o
+    que é absurdo.
+
+  \item Seja \(A \subset \mathcal{F}\) tal que \(0 < |A| < \infty\).
+    Tome \(\mathcal{G} = \mathcal{F} \cup \{\cap A\}\), e observe que
+    \(\fip{\mathcal{G}}\).  Logo, \(\mathcal{G} = \mathcal{F}\) (pois
+    \(\mathcal{F} \subset \mathcal{G}\) e \(\mathcal{F}\) é maximal) e
+    então \(\cap A \in \mathcal{F}\).
+
+  \item Seja \(B \subset X\) e \(A \in \mathcal{F}\) tal que \(A
+    \subset B\).  Tome \(\mathcal{G} = \mathcal{F} \cup \{B\}\), e
+    observe que \(\fip{\mathcal{G}}\).  Logo, \(\mathcal{G} =
+    \mathcal{F}\) (pois \(\mathcal{F} \subset \mathcal{G}\) e
+    \(\mathcal{F}\) é maximal) e então \(B \in \mathcal{F}\).
+
+  \item Seja \(B \subset X\) tal que para qualquer \(A \in
+    \mathcal{F}\), tem-se \(A\cap B \comment{\neq}{(1)} \varnothing\).
+    Tome \(\mathcal{G} = \mathcal{F} \cup \{B\}\), e observe que
+    \(\fip{\mathcal{G}}\), pelo item (ii) e (1).  Logo, \(\mathcal{G}
+    = \mathcal{F}\) (pois \(\mathcal{F} \subset \mathcal{G}\) e
+    \(\mathcal{F}\) é maximal) e então \(B \in \mathcal{F}\).
+  \end{enumerate}
+\end{proof}
+
+\begin{theorem}[Lema de Zorn]
+  Todo conjunto não vazio, parcialmente ordenado e com limite superior
+  para toda cadeia (subconjunto totalmente ordenado) tem elemento
+  maximal.
+\end{theorem}
+
+\begin{proof}
+  Exercício para o leitor.
+\end{proof}
+
+\vspace{0.5em}\noindent\textbf{Nota:} equivalente ao axioma da escolha.
+
+\begin{proposition}\label{uf_exist}
+  Sejam \(X\) um conjunto e \(\mathcal{S} \subset \powerset(X)\) tal
+  que \(\fip{\mathcal{S}}\).  Então existe um ultrafiltro \(\mathcal{F}\) de
+  \(X\) tal que \(\mathcal{S} \subset \mathcal{F}\).
+\end{proposition}
+
+\begin{proof}
+  Caso \(X = \varnothing\) temos que \(S = \mathcal{F} =
+  \varnothing\).  Suponha agora que \(X \neq \varnothing\).  Considere
+  o conjunto, parcialmente ordenado pela
+  inclusão, \[\mathbb{E}=\{\mathcal{F} \suchthat \mathcal{S} \subset
+  \mathcal{F}\}_{\mathcal{F}\subset\powerset(X)}^{\fip{\mathcal{F}}}\neq\varnothing\enspace\text{(pois
+    \(\mathcal{S}\in\mathbb{E}\))}.\] Prosseguimos para mostrar que
+  que toda cadeia de \(\mathbb{E}\) é limitada superiormente em
+  \(\mathbb{E}\).  Seja \(\mathbb{C} \subset \mathbb{E}\) totalmente
+  ordenado (uma cadeia em \(\mathbb{E}\)).  Caso
+  \(\mathbb{C}=\varnothing\), o resultado segue trivialmente.  Suponha
+  então que \(\mathbb{C}\neq\varnothing\).  Afirmamos que
+  \(\cup\mathbb{C}\) é um limite superior de \(\mathbb{C}\) em
+  \(\mathbb{E}\).  Primeiramente, note que dado
+  \(\mathcal{G}\in\mathbb{C}\), tem-se
+  \(\mathcal{G}\subset\cup\mathbb{C}\).  Agora, para provar que
+  \(\cup\mathbb{C}\in\mathbb{E}\) basta mostrar que
+  \(\fip{\cup\mathbb{C}}\). Seja \(\mathcal{G} \subset
+  \cup\mathbb{C}\), tal que \(0<|\mathcal{G}|<\infty\).  Tome então
+  \(\mathcal{H}\in\{\mathcal{J}\}_{\mathcal{J}\in\mathbb{C}}^{\mathcal{G}\subset\mathcal{J}}\)
+  e observe que como \(\mathcal{H}\in\mathbb{C}\subset\mathbb{E}\),
+  temos que \(\fip{\mathcal{H}}\).  Dado então que
+  \(\mathcal{G}\subset\mathcal{H}\), temos
+  \(\cap\mathcal{G}\neq\varnothing\) e portanto
+  \(\fip{\cup\mathbb{C}}\).  Pelo \textbf{lema de Zorn},
+  \(\mathbb{E}\) tem um elemento maximal \(\mathcal{F}\).  Segue pela
+  definição de \(\mathbb{E}\) que \(\mathcal{F}\) é um ultrafiltro e
+  \(\mathcal{S} \subset \mathcal{F}\).
+\end{proof}
+
+\begin{definition}[Espaço Topológico]
+  Sejam \(X\) um conjunto qualquer e \(\tau \subset \powerset(X)\).  O
+  par \((X,\tau)\) é um espaço topológico se satisfaz
+  \begin{enumerate}[(i)]
+    \item \(X,\varnothing \in \tau\);
+    \item \(\{\cup B\}_{B\subset\tau} \subset \tau\);
+    \item \(\{\cap B\}_{B\subset\tau}^{|B| < \infty} \subset \tau\);
+  \end{enumerate}
+  \textbf{Nota:} \(\tau\) é chamado de ``topologia'' e seus elementos
+  de ``abertos''.
+\end{definition}
+
+\begin{definition}[Base]
+  Seja \((X,\tau)\) um espaço topológico.  Um conjunto
+  \(B\subset\tau\) é uma base deste espaço se \(\{\cup C\}_{C\subset
+    B}=\tau\).
+
+  \vspace{0.5em}\noindent\textbf{Nota:} os elementos de \(B\) são
+  chamados ``abertos básicos''.
+\end{definition}
+
+\begin{definition}[Sub-base]
+  Seja \((X,\tau)\) um espaço topológico. Um conjunto \(B\subset\tau\)
+  é uma sub-base deste espaço se \(\{\cap C\}_{C\subset B}^{|C| <
+    \infty}\cup \{X\}\) é uma base do mesmo.
+\end{definition}
+
+\begin{definition}[Fecho]
+  Sejam \((X,\tau)\) um espaço topológico e \(S \subset X\). O fecho
+  de \(S\) é \[\bar{S}=\left\{x \in X \suchthat \varnothing \notin \{U
+    \cap S\}_{x\in U\in\tau}\right\}.\]
+\end{definition}
+
+\begin{definition}[Compacidade]
+  Um espaço topológico \((X,\tau)\) é compacto se
+  \[\varnothing \notin \left\{\cap \{\bar{A}\}_{A\in \mathcal{S}} \suchthat
+    \fip{\mathcal{S}} \right\}_{\mathcal{S} \subset \powerset(X)}^{|\mathcal{S}|
+    > 0}.\]
+\end{definition}
+
+\begin{definition}[Produto Cartesiano]
+  Sejam \(I\neq\varnothing\) um conjunto e \(\{X_i\}_{i\in I}\) uma
+  coleção de conjuntos.  O produto cartesiano desta coleção é dado por
+  \[\prod_{i\in I}X_i = \{\function{f}{I}{\cup \{X_i\}_{i \in I}}\}_{i \in I}^{f(i) \in X_i} = \{(x_i)\}_{i \in I}^{x_i \in
+    X_i}.\]
+\end{definition}
+
+\begin{definition}[Projeção]
+  Para cada \(i \in I\) função projeção do produto cartesiano da
+  família \(\{X_i\}_{i \in I}\) sobre o conjunto \(X_i\) é dada por
+  \begin{align*}
+    \function{p_i}{\prod_{i \in I}X_i&}{X_i} \\
+    f & \rightarrow f(i).
+  \end{align*}
+\end{definition}
+
+\begin{definition}[Topologia do Produto]
+  Sejam \(I\neq\varnothing\) um conjunto, \(\{(X_i,\tau_i)\}_{i \in
+    I}\) uma coleção de espaços topológicos, \(X=\prod_{i\in I}X_i\) e
+  \(\tau\) a topologia cuja sub-base é \(\{p_i^{-1}(U_i)\}_{i \in
+    I}^{U_i \in \tau_i}\).  Define-se o espaço topológico do produto
+  cartesiano como \((X,\tau)\).
+
+  \vspace{0.5em}\noindent\textbf{Nota:} Neste contexto \(\tau\) também
+  é chamado de topologia de Tychonoff.
+\end{definition}
+
+\begin{theorem}[Tychonoff]
+  Sejam \(I\neq\varnothing\) um conjunto e \(\{(X_i,\tau_i)\}_{i \in
+    I}\) uma coleção de espaços topológicos compactos.  Então, o
+  espaço topológico de seu produto cartesiano é compacto.
+\end{theorem}
+
+\begin{proof}
+  Seja \((X,\tau)\) o espaço topológico do produto cartesiano em
+  questão.  Seja \(\mathcal{S}\subset\powerset(X)\) tal que
+  \(S\neq\varnothing\) e \(\fip{\mathcal{S}}\).  Pela
+  \textit{Proposição \ref{uf_exist}} existe um ultrafiltro
+  \(\mathcal{F}\) de \(X\) tal que \(\mathcal{S}\subset\mathcal{F}\).
+  Para cada \(i \in I\) considere o conjunto
+  \(\mathcal{F}_i=\{p_i(A)\}_{A\in\mathcal{F}}\subset\powerset(X_i)\).
+  Provaremos que \(\fip{\mathcal{F}_i}\).  Seja \(\mathcal{G}_i
+  \subset \mathcal{F}_i\), tal que \(0<|\mathcal{G}_i|<\infty\).
+  Portanto, existe \(\mathcal{G} \subset \mathcal{F}\), tal que
+  \(0<|\mathcal{G}|<\infty\), satisfazendo
+  \(\mathcal{G}_i=\{p_i(A)\}_{A\in\mathcal{G}}\).  Como
+  \(\fip{\mathcal{F}}\), então \(\cap\mathcal{G}\neq\varnothing\).
+  Portanto \(\cap\mathcal{G}_i\neq\varnothing\) (pois
+  \(p_i(\cap\mathcal{G}) \subset \cap\mathcal{G}_i\)) e logo
+  \(\fip{\mathcal{F}_i}\).  Visto que \(X_i\) é compacto, temos que
+  existe \[x_i\in\cap\{\bar{A}\}_{A\in \mathcal{F}_i} \comment{=}{(1)}
+  \cap\{\overline{p_i(A)}\}_{A\in\mathcal{F}} \neq\varnothing.\]
+  Portanto, para todo \(A\in\mathcal{F}\), temos \[x_i \in
+  \overline{p_i(A)}=\{x\in X_i \suchthat \varnothing \notin \{U\cap
+  p_i(A)\}_{x\in U\in \tau_i}\}.\] Logo, para todo \(U\in\tau_i\), com
+  \(x_i\in U\), vale \(U\cap p_i(A)\comment{\neq}{(2)}\varnothing\).
+  Tome \(x=(x_i)\in X\) (uso implícito do axioma da escolha).
+  Provemos que \(x\in\cap\{\bar{A}\}_{A\in\mathcal{S}}\).  Seja
+  \(U\in\tau\) tal que \(x\in U\).  Pela definição da topologia do
+  produto, existe um conjunto básico \(V\) tal que \(x\in
+  V\comment{\subset}{(3)} U\),
+  onde \[V=\cap\{p_{i_k}^{-1}(U_k)\suchthat U_k \in
+  \tau_{i_k}\}_{k\in\{1,\dots,n\}}^{\{i_1,\dots,i_n\}\subset I}.\]
+  Observe que, por (1), para todo \(k \in \{1,\dots,n\}\), tem-se
+  \(x_{i_k}\in\cap\{\overline{p_{i_k}(A)}\}_{A\in\mathcal{F}}\).  Dado
+  que \(x\in p_{i_k}^{-1}(U_k)\) (pois \(x \in V\)), temos que
+  \(x_{i_k}\in U_k\).  Por (2), para todo \(A\in\mathcal{F}\), tem-se
+  \(U_k \cap p_{i_k}(A)\neq\varnothing\) e logo
+  \(p_{i_k}^{-1}(U_k)\cap A\neq\varnothing\) (pois \(p_{i_k}^{-1}(U_k
+  \cap p_{i_k}(A)) \subset p_{i_k}^{-1}(U_k)\cap A\)).  Pela
+  \textit{Proposição (\ref{uf_prop}.iv)}, temos
+  \(B=\{p_{i_k}^{-1}(U_k)\}_{k\in\{1,\dots,n\}}\subset\mathcal{F}\), e
+  então pela \textit{Proposição (\ref{uf_prop}.ii)} chegamos a
+  \(V=\cap B\in\mathcal{F}\).  Por (3) e pela \textit{Proposição
+    (\ref{uf_prop}.iii)}, concluímos que \(U\in\mathcal{F}\).  Em
+  particular, \(U\cap A\neq\varnothing\) para todo \(A\in
+  \mathcal{S}\subset\mathcal{F}\).  Logo,
+  \(x\in\cap\{\bar{A}\}_{A\in\mathcal{S}}\) e portanto \(X,\tau\) é
+  compacto.
+\end{proof}
+
+\end{document}
